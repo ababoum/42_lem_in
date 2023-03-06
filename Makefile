@@ -11,30 +11,38 @@ CC			= @gcc
 
 CFLAGS		= -Wall -Wextra -Werror -g
 
-NAME		= lem_in
+NAME		= lem-in
 
 SRCS		= srcs/main.c \
+				srcs/rooms.c \
 				srcs/utils.c \
 				srcs/get_next_line.c
 
 INCLUDES	= inc/lem_in.h
 
 OBJ			= $(SRCS:.c=.o)
+LIBFT		= libft/libft.a
+LIBFT_PATH	= libft/
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(INCLUDES)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	make -C $(LIBFT_PATH)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_PATH) -lft
 	@echo "$(F_GREEN)$(F_BOLD) $(NAME) executable is compiled and ready.$(F_NONE)"
 
 
 clean:
 	@rm -rf $(OBJ)
+	make -C $(LIBFT_PATH) clean
 	@echo "$(F_CYAN)$(F_BOLD) .o files successfully deleted.$(F_NONE)"
 
-fclean: clean
+fclean:
+	@rm -rf $(OBJ)
+	@echo "$(F_CYAN)$(F_BOLD) .o files successfully deleted.$(F_NONE)"
 	@rm -rf $(NAME)
 	@echo "$(F_CYAN)$(F_BOLD) $(NAME) executable(s) successfully deleted.$(F_NONE)"
+	make -C $(LIBFT_PATH) fclean
 
 re: fclean all
 

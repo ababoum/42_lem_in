@@ -1,32 +1,66 @@
 #include "../inc/lem_in.h"
+#include "../libft/libft.h"
 
-
-int	ft_strlen(char *str)
+int ft_is_numeric(const char *str)
 {
-	int	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-void	ft_memset(void *ptr, int val, size_t n)
-{
-	size_t	i;
-	char	*tmp;
+	int i;
 
 	i = 0;
-	tmp = ptr;
-	while (i < n)
-		tmp[i++] = val;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-void	*ft_calloc(size_t nmemb, size_t size)
+int ft_is_signed_numeric(const char *str)
 {
-	void	*ptr;
+	int i;
 
-	ptr = malloc(nmemb * size);
-	ft_memset(ptr, 0, nmemb * size);
-	return (ptr);
+	i = 0;
+	if (str[i] == '-')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int ft_strcmp(const char *s1, const char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
+size_t tab_len(char **tab)
+{
+	size_t i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+char *trim_new_line(char *str)
+{
+	if (str && ft_strlen(str) > 0)
+	{
+		if (str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
+	}
+	return (str);
 }
