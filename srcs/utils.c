@@ -55,6 +55,20 @@ size_t tab_len(char **tab)
 	return (i);
 }
 
+void free_tab(char **tab)
+{
+	size_t i = 0;
+
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
 char *trim_new_line(char *str)
 {
 	if (str && ft_strlen(str) > 0)

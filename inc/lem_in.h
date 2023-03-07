@@ -18,14 +18,6 @@ typedef enum e_room_type
 } t_room_type;
 
 // Structures
-typedef struct s_data
-{
-    size_t ants_number;
-    size_t rooms_number;
-    t_room *rooms_tab;
-    char **room_links;
-} t_data;
-
 typedef struct s_room
 {
     size_t id;
@@ -34,11 +26,22 @@ typedef struct s_room
     int y;
 } t_room;
 
+typedef struct s_data
+{
+    size_t ants_number;
+    size_t rooms_number;
+    t_room *rooms_tab;
+    char **room_links;
+    size_t start_room_id;
+    size_t end_room_id;
+} t_data;
+
 // Rooms
 char **split_room_line(const char *line);
 t_room *new_room(const char *name, int x, int y);
-size_t get_room_id(t_list *rooms, const char *name);
+size_t get_room_id(t_data *data, const char *name);
 char **split_link_line(const char *line);
+void free_room(void *room);
 
 // GNL
 char *get_next_line(int fd);
