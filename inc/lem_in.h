@@ -21,22 +21,24 @@ typedef enum e_room_type
 typedef struct s_data
 {
     size_t ants_number;
-    t_list *rooms_list;
-    char **rooms_map;
+    size_t rooms_number;
+    t_room *rooms_tab;
+    char **room_links;
 } t_data;
 
 typedef struct s_room
 {
     size_t id;
     char *name;
-    t_room_type type;
     int x;
     int y;
 } t_room;
 
 // Rooms
 char **split_room_line(const char *line);
-t_room *new_room(const char *name, int x, int y, t_room_type type);
+t_room *new_room(const char *name, int x, int y);
+size_t get_room_id(t_list *rooms, const char *name);
+char **split_link_line(const char *line);
 
 // GNL
 char *get_next_line(int fd);
@@ -48,5 +50,6 @@ int ft_is_numeric(const char *str);
 int ft_is_signed_numeric(const char *str);
 int ft_strcmp(const char *s1, const char *s2);
 size_t tab_len(char **tab);
+void free_tab(char **tab);
 
 #endif
