@@ -28,7 +28,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(INCLUDES)
 	make -C $(LIBFT_PATH)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_PATH) -lft
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_PATH) -lft -I$(INCLUDES)
 	@echo "$(F_GREEN)$(F_BOLD) $(NAME) executable is compiled and ready.$(F_NONE)"
 
 

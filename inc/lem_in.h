@@ -12,9 +12,9 @@
 
 typedef enum e_room_type
 {
+    NORMAL,
     START,
-    END,
-    NORMAL
+    END
 } t_room_type;
 
 // Structures

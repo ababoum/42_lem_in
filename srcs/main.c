@@ -20,7 +20,7 @@ int main(void)
 {
     char *line;
     t_data data;
-    t_list *rooms;
+    t_list *rooms = 0;
     t_room_type room_type = NORMAL;
     size_t line_number = 1;
 
@@ -94,7 +94,19 @@ int main(void)
     data.rooms_list = rooms;
 
     // show all the rooms
-    ft_lstiter(data.rooms_list, (void (*)(void *)) & print_room);
+    // ft_lstiter(data.rooms_list, (void (*)(void *)) & print_room);
+
+    // links
+    if (!line or !ft_strchr(line, '-'))
+    {
+        ft_putstr_fd("Error: no links\n", STDERR_FILENO);
+        return (EXIT_FAILURE);
+    }
+
+    while (line)
+    {
+        line = GET_NEXT_LINE(0);
+    }
 
     return (EXIT_SUCCESS);
 }
