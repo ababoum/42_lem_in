@@ -1,49 +1,76 @@
-F_NONE			= \033[37;0m
-F_BOLD			= \033[1m
-F_ORANGE		= \033[38m
-F_RED			= \033[31m
-F_YELLOW		= \033[33m
-F_GREEN			= \033[32m
-F_CYAN			= \033[36m
-F_BLUE			= \033[34m
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: marwa <marwa@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/08 17:28:23 by marwa             #+#    #+#              #
+#    Updated: 2023/03/08 17:52:23 by marwa            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC			= @gcc
+FLAGS_COLOR		=		\033[34m
+OK_COLOR		=		\033[32m
+EOC				=		\033[37;0m
+ECHO			=		echo
+MKDIR			=		mkdir
 
-CFLAGS		= -Wall -Wextra -Werror -g
+NAME			=		lem-in
 
-NAME		= lem-in
+CC				=		gcc
+CFLAGS			=		$(INC) -Wall -Werror -Wextra
 
-SRCS		= srcs/main.c \
-				srcs/rooms.c \
-				srcs/utils.c \
-				srcs/get_next_line.c
+SRCDIR			=		srcs
+OBJDIR			=		objs/
+BINDIR			=		.
+INCLUDESDIR		=		includes/
 
-INCLUDES	= inc/lem_in.h
+LIBFTDIR		=		libft
+LIBFT			=		$(LIBFTDIR)/libft.a
 
-OBJ			= $(SRCS:.c=.o)
-LIBFT		= libft/libft.a
-LIBFT_PATH	= libft/
+VPATH			=		$(INCLUDESDIR) \
+						$(SRCDIR) \
+			 			$(SRCDIR)/queue
+INCLUDES		=		lem_in.h
+SRCS			=		get_next_line.c main.c pathfinder.c rooms.c utils.c
+SRCS			+=		queue.c initialize.c is_empty.c
 
-all: $(NAME)
+OBJECTS			=		$(addprefix $(OBJDIR), $(SRCS:.c=.o))
 
-$(NAME): $(OBJ) $(INCLUDES)
-	make -C $(LIBFT_PATH)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_PATH) -lft -I$(INCLUDES)
-	@echo "$(F_GREEN)$(F_BOLD) $(NAME) executable is compiled and ready.$(F_NONE)"
+INC 			=		-I $(INCLUDESDIR) -I $(LIBFTDIR)
 
+LFLAGS			=		-L $(LIBFTDIR) -lft -ltermcap
+
+all:
+	@$(MAKE) -C $(LIBFTDIR)
+	@$(ECHO) "$(FLAGS_COLOR)Compiling with flags $(CFLAGS) $(EOC)"
+	@$(MAKE) $(BINDIR)/$(NAME)
+
+$(LIBFT):
+	@$(MAKE) -C $(LIBFTDIR)
+
+$(BINDIR)/$(NAME): $(LIBFT) $(OBJDIR) $(OBJECTS)
+	@$(CC) -o $@ $(OBJECTS) $(CFLAGS) $(LFLAGS)
+	@$(ECHO) "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
+
+$(OBJDIR):
+	@$(MKDIR) $@
+
+$(OBJDIR)%.o: $(SRC_DIR)%.c $(INCLUDES)
+	@$(CC) -c $< -o $@ $(CFLAGS)
+	@$(ECHO) "${COMP_COLOR}$< ${EOC}"
 
 clean:
-	@rm -rf $(OBJ)
-	make -C $(LIBFT_PATH) clean
-	@echo "$(F_CYAN)$(F_BOLD) .o files successfully deleted.$(F_NONE)"
+	@$(MAKE) clean -C $(LIBFTDIR)
+	@$(RM) $(OBJECTS)
+	@$(RM) -r $(OBJDIR) && $(ECHO) "${OK_COLOR}Successfully cleaned $(NAME) objects files ${EOC}"
 
-fclean:
-	@rm -rf $(OBJ)
-	@echo "$(F_CYAN)$(F_BOLD) .o files successfully deleted.$(F_NONE)"
-	@rm -rf $(NAME)
-	@echo "$(F_CYAN)$(F_BOLD) $(NAME) executable(s) successfully deleted.$(F_NONE)"
-	make -C $(LIBFT_PATH) fclean
+fclean: clean
+	@$(MAKE) fclean -C $(LIBFTDIR)
+	@$(RM) $(BINDIR)/$(NAME)  && $(ECHO) "${OK_COLOR}Successfully cleaned $(NAME) ${EOC}"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+
+

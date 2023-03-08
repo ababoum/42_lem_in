@@ -1,4 +1,4 @@
-#include "../inc/lem_in.h"
+#include "lem_in.h"
 
 t_room *new_room(const char *name, int x, int y)
 {

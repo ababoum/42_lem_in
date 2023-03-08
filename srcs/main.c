@@ -1,4 +1,4 @@
-#include "../inc/lem_in.h"
+#include "lem_in.h"
 
 void print_room(t_room *room)
 {
@@ -214,10 +214,12 @@ int main(void)
     {
         for (size_t j = 0; j < data.rooms_number; ++j)
         {
-            printf("%d ", data.room_links[i][j]);
+            ft_printf("%d ", data.room_links[i][j]);
         }
-        printf("\n");
+        ft_printf("\n");
     }
+    ft_printf("\n\n");
+    pathfinder(&data);
 
     return (EXIT_SUCCESS);
 }

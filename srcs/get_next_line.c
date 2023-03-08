@@ -1,4 +1,4 @@
-#include "../inc/lem_in.h"
+#include "lem_in.h"
 
 static int find_char(char *str, char c)
 {

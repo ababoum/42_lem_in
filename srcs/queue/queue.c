@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 14:53:18 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 13:40:13 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 14:48:42 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_list      *pathfinder(t_data *data)
-{
-    // t_node      *queue;
-    t_list      *node;
-    size_t      start;
-    // size_t      end;
-    // char        **adj_matrix;
+// t_list	*ft_lstnew(void *content)
+// {
+// 	t_list	*list;
 
-    // adj_matrix = data->room_links;
-    // queue = NULL;
-    start = data->start_idx;
-    // end = data->end_idx;
+// 	list = malloc(sizeof(t_list));
+// 	if (!list)
+// 		return (0);
+// 	list->content = content;
+// 	list->next = 0;
+// 	return (list);
+// }
 
-    node = ft_lstnew(data->rooms_tab + start);
-
-    print_room(node->content);
-    return NULL;
-}

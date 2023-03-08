@@ -1,4 +1,4 @@
-#include "../inc/lem_in.h"
+#include "lem_in.h"
 
 int ft_is_numeric(const char *str)
 {
