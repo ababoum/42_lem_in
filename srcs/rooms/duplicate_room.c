@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_room.c                                         :+:      :+:    :+:   */
+/*   duplicate_room.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 18:11:52 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:40:21 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 23:10:17 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 23:13:59 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_room		*new_room(const char *name, int x, int y)
+t_room			*duplicate_room(t_room *room)
 {
-    static size_t id = 0;
+	t_room 		*tmp;
 
-    t_room *room = malloc(sizeof(t_room));
-    if (!room)
-        return (NULL);
-    room->id = id++;
-    room->name = ft_strdup(name);
-    room->x = x;
-    room->y = y;
-    room->parent = NULL;
-
-    return room;
+	tmp = malloc(sizeof(t_room));
+	tmp->id = room->id;
+	tmp->name = room->name;
+	tmp->parent = room->parent;
+	tmp->x = room->x;
+	tmp->y = room->y;
+	return (tmp);
 }

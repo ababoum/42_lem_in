@@ -24,8 +24,16 @@ typedef struct          s_room
     char                *name;
     int                 x;
     int                 y;
-    size_t              *path;
+    struct s_room      *parent;
 }                       t_room;
+
+typedef struct          s_path
+{
+    size_t              len;
+    size_t              *path;
+    size_t              ant_num;
+    struct s_path       *next;
+}                       t_path;
 
 typedef struct s_data
 {
@@ -33,6 +41,7 @@ typedef struct s_data
     size_t              rooms_number;
     t_room              *rooms_tab;
     char                **room_links;
+    t_path              *path_lst;
     size_t              start_idx;
     size_t              end_idx;
 } t_data;
@@ -57,6 +66,7 @@ t_room                  *new_room(const char *name, int x, int y);
 void                    print_room(t_room *room);
 char                    **split_link_line(const char *line);
 char                    **split_room_line(const char *line);
+t_room			        *duplicate_room(t_room *room);
 
 // GNL
 char                    *get_next_line(int fd);
@@ -77,6 +87,10 @@ t_room                  *pop(t_queue *q);
 
 
 //Algorithm
+t_path  	            *create_path(t_room *room);
+void                    add_path(t_data *data, t_path *path);
 t_list                  *pathfinder(t_data *data);
+void                    print_path(t_data *data, t_path *path);
+void                    print_all_paths(t_data *data);
 
 #endif

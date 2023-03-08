@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:15:16 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/08 21:47:21 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(void)
 
     data.start_idx = -1;
     data.end_idx = -1;
-    
+    data.path_lst = NULL;
     // number of ants
     line = GET_NEXT_LINE(0);
     if (!ft_is_numeric(line))

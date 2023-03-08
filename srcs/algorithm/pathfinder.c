@@ -6,65 +6,83 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:28:12 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/08 23:15:10 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-// static char     *created_visited(t_data *data)
-// {
-//     char        **visited;
+static  void        reset_visited(t_data *data, char *visited, t_path *path)
+{
+    for (size_t i = 0; i < data->rooms_number; i++)
+        visited[i] = 0;
+    for (size_t i = 0; i < path->len; i++)
+    {
+        visited[path->path[i]] = 1;
+        ft_printf("%d - ", path->path[i]);
+    }
+    ft_printf("\n");
+    visited[data->start_idx] = 0;
+    visited[data->end_idx] = 0;
+}
 
-//     visited = malloc(data->rooms_number * sizeof(char *));
-//     for (size_t i = 0; i < data->rooms_number; i++)
-//     {
-//         visited[i] = malloc(data->rooms_number * sizeof(char));
-//         visited[i] = 0;
-//     }
-//     return visited;
-// }
 
-t_list      *pathfinder(t_data *data)
+t_list              *pathfinder(t_data *data)
 {
     t_queue     *queue;
-    t_room      *room;
+    t_room      *current;
     t_room      *tmp;
+    t_path      *path;
     size_t      idx;
     char        *visited;
 
     ft_printf("start idx: %d\n", data->start_idx);
     ft_printf("end idx: %d\n", data->end_idx);
+    ft_printf("\n\n");
 
     queue = malloc(sizeof(t_queue));
     visited = malloc(data->rooms_number);
     initialize(queue);
-    room = data->rooms_tab + data->start_idx;
-    push(queue, room);
-    print_room(room);
+    current = data->rooms_tab + data->start_idx;
+    push(queue, current);
+    print_room(current);
     while (!is_empty(queue))
     {
-        room = pop(queue);
-        ft_printf("\033[32mCurrent room: %s\n\033[0m", room->name);
-        idx = room->id;
+        current = pop(queue);
+        idx = current->id;
+        // ft_printf("\033[32mCurrent Room: %s\n\033[0m", current->name);
+        if (current->id == data->end_idx)
+        {
+            // ft_printf("\033[36mReached end: %s\n\033[0m", current->name);
+            path = create_path(current);
+            add_path(data, path);
+            // ft_printf("\033[36m");
+            print_path(data, path);
+            // ft_printf("\033[0m");
+            // reset_visited(data, visited, path);
+            visited[data->start_idx] = 0;
+            visited[data->end_idx] = 0;
+            continue;
+        }
         visited[idx] = 1;
         for (size_t i = 0; i < data->rooms_number; i++)
         {
             if (data->room_links[idx][i] == 1)
             {
                 tmp = data->rooms_tab + i;
-                ft_printf("%d Room has connection to %d\n", idx, i);
+                // ft_printf("%d Room has connection to %d\n", idx, i);
                 if (!visited[i])
                 {
+                    tmp->parent = current;
                     push(queue, tmp);
-                    ft_printf("Pushed %d\n", i);
+                    // ft_printf("Pushed %d\n", i);
                 }
-                else
-                    ft_printf("\033[33mAlready visited %d\033[0m\n", i);
+                // else
+                    // ft_printf("\033[33mAlready visited %d\033[0m\n", i);
             }
         }
     }
-
-
+    ft_printf("\n\n");
+    print_all_paths(data);
     return NULL;
 }

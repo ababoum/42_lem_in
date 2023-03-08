@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_room.c                                         :+:      :+:    :+:   */
+/*   add_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 18:11:52 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:40:21 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 21:47:37 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 22:01:36 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_room		*new_room(const char *name, int x, int y)
+void			add_path(t_data *data, t_path *path)
 {
-    static size_t id = 0;
+	t_path		*tmp;
+	t_path		*prev;
 
-    t_room *room = malloc(sizeof(t_room));
-    if (!room)
-        return (NULL);
-    room->id = id++;
-    room->name = ft_strdup(name);
-    room->x = x;
-    room->y = y;
-    room->parent = NULL;
-
-    return room;
+	if (data->path_lst == NULL)
+	{
+		data->path_lst = path;
+		return;
+	}
+	tmp = data->path_lst;
+	prev = data->path_lst;
+	while (tmp != NULL && tmp->len < path->len)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	prev->next = path;
+	path->next = tmp;
 }

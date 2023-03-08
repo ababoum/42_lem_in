@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_room.c                                         :+:      :+:    :+:   */
+/*   print_all_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 18:11:52 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:40:21 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 22:17:43 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 22:30:06 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_room		*new_room(const char *name, int x, int y)
+void			print_all_paths(t_data *data)
 {
-    static size_t id = 0;
+	t_path		*p;
 
-    t_room *room = malloc(sizeof(t_room));
-    if (!room)
-        return (NULL);
-    room->id = id++;
-    room->name = ft_strdup(name);
-    room->x = x;
-    room->y = y;
-    room->parent = NULL;
-
-    return room;
+	p = data->path_lst;
+	while (p != NULL)
+	{
+		print_path(data, p);
+		p = p->next;
+	}
 }

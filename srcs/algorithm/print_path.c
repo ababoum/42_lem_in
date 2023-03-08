@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_room.c                                         :+:      :+:    :+:   */
+/*   print_path.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 18:11:52 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 20:40:21 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 21:42:30 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 22:31:23 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_room		*new_room(const char *name, int x, int y)
+
+void         print_path(t_data *data, t_path *path)
 {
-    static size_t id = 0;
+    size_t  idx;
 
-    t_room *room = malloc(sizeof(t_room));
-    if (!room)
-        return (NULL);
-    room->id = id++;
-    room->name = ft_strdup(name);
-    room->x = x;
-    room->y = y;
-    room->parent = NULL;
-
-    return room;
+    ft_printf("Size of path: %d\n", path->len);
+    idx = path->path[0];
+    ft_printf("[%s]", data->rooms_tab[idx].name);
+    for (size_t i = 1; i < path->len; i++)
+    {
+        idx = path->path[i];
+        ft_printf("->[%s]", data->rooms_tab[idx].name);
+    }
+    ft_printf("\n");
 }
