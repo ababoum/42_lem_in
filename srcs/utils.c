@@ -1,5 +1,4 @@
 #include "../inc/lem_in.h"
-#include "../libft/libft.h"
 
 int ft_is_numeric(const char *str)
 {

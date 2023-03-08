@@ -1,5 +1,4 @@
 #include "../inc/lem_in.h"
-#include "../libft/libft.h"
 
 t_room *new_room(const char *name, int x, int y)
 {
@@ -18,7 +17,7 @@ t_room *new_room(const char *name, int x, int y)
 
 char **split_room_line(const char *line)
 {
-    char **line_items = ft_split(line, ' ');
+    char **line_items = ft_strsplit(line, ' ');
 
     if (!line_items) {
         ft_putstr_fd("Error: invalid room line\n", STDERR_FILENO);
@@ -55,7 +54,7 @@ size_t get_room_id(t_data *data, const char *name)
 
 char **split_link_line(const char *line)
 {
-    char **line_items = ft_split(line, '-');
+    char **line_items = ft_strsplit(line, '-');
     if (line_items && tab_len(line_items) == 2)
     {
         return (line_items);

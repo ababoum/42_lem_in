@@ -1,5 +1,4 @@
 #include "../inc/lem_in.h"
-#include "../libft/libft.h"
 
 void print_room(t_room *room)
 {
@@ -22,8 +21,8 @@ int main(void)
     t_room_type room_type = NORMAL;
     size_t line_number = 1;
 
-    data.start_room_id = -1;
-    data.end_room_id = -1;
+    data.start_idx = -1;
+    data.end_idx = -1;
     
     // number of ants
     line = GET_NEXT_LINE(0);
@@ -86,26 +85,26 @@ int main(void)
                                         ft_atoi(line_items[2]));
                 if (room_type == START)
                 {
-                    if (data.start_room_id != (size_t)-1)
+                    if (data.start_idx != (size_t)-1)
                     {
                         ft_putstr_fd("Error: multiple start rooms\n", STDERR_FILENO);
                         free(line);
                         ft_lstclear(&rooms, free_room);
                         return (EXIT_FAILURE);
                     }
-                    data.start_room_id = room->id;
+                    data.start_idx = room->id;
                     room_type = NORMAL;
                 }
                 else if (room_type == END)
                 {
-                    if (data.end_room_id != (size_t)-1)
+                    if (data.end_idx != (size_t)-1)
                     {
                         ft_putstr_fd("Error: multiple end rooms\n", STDERR_FILENO);
                         free(line);
                         ft_lstclear(&rooms, free_room);
                         return (EXIT_FAILURE);
                     }
-                    data.end_room_id = room->id;
+                    data.end_idx = room->id;
                     room_type = NORMAL;
                 }
                 if (room)
@@ -146,9 +145,9 @@ int main(void)
     // show the rooms mapping tab
     for (size_t i = 0; i < data.rooms_number; ++i)
     {
-        if (i == data.start_room_id)
+        if (i == data.start_idx)
             ft_putstr_fd("start room: ", 1);
-        else if (i == data.end_room_id)
+        else if (i == data.end_idx)
             ft_putstr_fd("end room: ", 1);
         print_room(&data.rooms_tab[i]);
     }
