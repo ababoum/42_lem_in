@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_empty.c                                         :+:      :+:    :+:   */
+/*   print_queue.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 14:35:16 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 18:06:39 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 18:00:09 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:03:01 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t			is_empty(t_queue *q)
+void			print_queue(t_queue *q)
 {
-	return (q->rear == NULL);
+	t_node	*rear;
+
+	rear = q->rear;
+	while (rear != NULL)
+	{
+		print_room(rear->room);
+		rear = rear->next;
+	}
 }

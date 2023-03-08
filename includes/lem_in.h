@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "../libft/includes/libft.h"
 
+// Structures
 typedef enum            e_room_type
 {
     NORMAL,
@@ -17,7 +18,6 @@ typedef enum            e_room_type
     END
 }                       t_room_type;
 
-// Structures
 typedef struct          s_room
 {
     size_t              id;
@@ -27,20 +27,6 @@ typedef struct          s_room
     size_t              *path;
 }                       t_room;
 
-typedef struct          s_node
-{
-    t_room              *room;
-    struct s_node       *next;
-}                       t_node;
-
-typedef struct          s_queue
-{
-    int                 count;
-    t_node              *front;
-    t_node              *rear;
-}                       t_queue;
-
-typedef struct queue queue;
 typedef struct s_data
 {
     size_t              ants_number;
@@ -51,29 +37,42 @@ typedef struct s_data
     size_t              end_idx;
 } t_data;
 
+typedef struct          s_node
+{
+    t_room              *data;
+    struct s_node       *next;
+}                       t_node;
+
+typedef struct          s_queue
+{
+    int                 count;
+    t_node              *front;
+    t_node              *rear;
+}                       t_queue;
+
 // Rooms
-char                    **split_room_line(const char *line);
-t_room                  *new_room(const char *name, int x, int y);
-size_t                  get_room_id(t_data *data, const char *name);
-char                    **split_link_line(const char *line);
 void                    free_room(void *room);
+size_t                  get_room_id(t_data *data, const char *name);
+t_room                  *new_room(const char *name, int x, int y);
+void                    print_room(t_room *room);
+char                    **split_link_line(const char *line);
+char                    **split_room_line(const char *line);
 
 // GNL
 char                    *get_next_line(int fd);
-char                    *trim_new_line(char *str);
 #define                 GET_NEXT_LINE(fd) trim_new_line(get_next_line(fd))
 
 // Utils
+void                    free_tab(char **tab);
 int                     ft_is_numeric(const char *str);
 int                     ft_is_signed_numeric(const char *str);
 size_t                  tab_len(char **tab);
-void                    free_tab(char **tab);
+char                    *trim_new_line(char *str);
 
-void                    print_room(t_room *room);
-
-// Queue
+//Queue
 void                    initialize(t_queue *q);
-size_t                  isempty(t_queue *q);
+size_t                  is_empty(t_queue *q);
+void                    push(t_queue *q, t_room *node);
 
 //Algorithm
 t_list                  *pathfinder(t_data *data);

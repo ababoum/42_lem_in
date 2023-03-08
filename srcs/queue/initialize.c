@@ -6,12 +6,11 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 14:33:12 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 14:48:48 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/08 18:03:24 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-// #include "lem_in.h"
 
 void		initialize(t_queue *q)
 {

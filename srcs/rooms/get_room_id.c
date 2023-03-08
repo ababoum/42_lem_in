@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathfinder.c                                       :+:      :+:    :+:   */
+/*   get_room_id.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 14:53:18 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 18:14:07 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:14:14 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_list      *pathfinder(t_data *data)
+size_t get_room_id(t_data *data, const char *name)
 {
-    // t_node      *queue;
-    t_list      *node;
-    size_t      start;
-    // size_t      end;
-    // char        **adj_matrix;
-
-    // adj_matrix = data->room_links;
-    // queue = NULL;
-    start = data->start_idx;
-    // end = data->end_idx;
-
-    node = ft_lstnew(data->rooms_tab + start);
-
-    print_room(node->content);
-    return NULL;
+    for (size_t i = 0; i < data->rooms_number; ++i)
+    {
+        if (ft_strcmp(data->rooms_tab[i].name, name) == 0)
+            return (i);
+    }
+    return (-1);
 }

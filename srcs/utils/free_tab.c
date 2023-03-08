@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_empty.c                                         :+:      :+:    :+:   */
+/*   free_tab.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 14:35:16 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 18:06:39 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 18:21:27 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:21:34 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t			is_empty(t_queue *q)
+void free_tab(char **tab)
 {
-	return (q->rear == NULL);
+	size_t i = 0;
+
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

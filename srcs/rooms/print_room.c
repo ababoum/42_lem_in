@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_empty.c                                         :+:      :+:    :+:   */
+/*   print_room.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 14:35:16 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 18:06:39 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 18:09:34 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:09:43 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t			is_empty(t_queue *q)
+void		print_room(t_room *room)
 {
-	return (q->rear == NULL);
+    ft_printf("id: %d, name: %s, [%d, %d]\n", room->id, room->name, room->x, room->y);
 }

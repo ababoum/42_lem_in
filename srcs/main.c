@@ -1,9 +1,16 @@
-#include "lem_in.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:40:41 by marwa            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void print_room(t_room *room)
-{
-    ft_printf("id: %d, name: %s, [%d, %d]\n", room->id, room->name, room->x, room->y);
-}
+#include "lem_in.h"
 
 int main(void)
 {
@@ -218,8 +225,8 @@ int main(void)
         }
         ft_printf("\n");
     }
-    ft_printf("\n\n");
-    pathfinder(&data);
+    // ft_printf("\n\n");
+    // pathfinder(&data);
 
     return (EXIT_SUCCESS);
 }

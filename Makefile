@@ -6,7 +6,7 @@
 #    By: marwa <marwa@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 17:28:23 by marwa             #+#    #+#              #
-#    Updated: 2023/03/08 17:52:23 by marwa            ###   ########.fr        #
+#    Updated: 2023/03/08 18:34:20 by marwa            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ MKDIR			=		mkdir
 NAME			=		lem-in
 
 CC				=		gcc
-CFLAGS			=		$(INC) -Wall -Werror -Wextra
+CFLAGS			=		$(INC) -Wall -Wextra
 
 SRCDIR			=		srcs
 OBJDIR			=		objs/
@@ -31,10 +31,33 @@ LIBFT			=		$(LIBFTDIR)/libft.a
 
 VPATH			=		$(INCLUDESDIR) \
 						$(SRCDIR) \
-			 			$(SRCDIR)/queue
+			 			$(SRCDIR)/algorithm \
+			 			$(SRCDIR)/queue \
+			 			$(SRCDIR)/rooms \
+			 			$(SRCDIR)/utils
+
 INCLUDES		=		lem_in.h
-SRCS			=		get_next_line.c main.c pathfinder.c rooms.c utils.c
-SRCS			+=		queue.c initialize.c is_empty.c
+
+#############################
+# 			Main			#
+#############################
+SRCS			=		main.c
+#############################
+# 			Algorithm		#
+#############################
+SRCS			+=		pathfinder.c
+#############################
+# 			Queue			#
+#############################
+SRCS			+=		initialize.c is_empty.c push.c
+#############################
+# 			Rooms			#
+#############################
+SRCS			+=		new_room.c split_room_line.c get_room_id.c split_link_line.c free_room.c print_room.c
+#############################
+# 			Utils			#
+#############################
+SRCS			+=		ft_is_numeric.c ft_is_signed_numeric.c  tab_len.c free_tab.c trim_new_line.c get_next_line.c
 
 OBJECTS			=		$(addprefix $(OBJDIR), $(SRCS:.c=.o))
 

@@ -1,18 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_empty.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 14:35:16 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 18:06:39 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 18:19:10 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 18:21:50 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-size_t			is_empty(t_queue *q)
+char *trim_new_line(char *str)
 {
-	return (q->rear == NULL);
+	if (str && ft_strlen(str) > 0)
+	{
+		if (str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
+	}
+	return (str);
 }
+
+
+// int ft_strcmp(const char *s1, const char *s2)
+// {
+// 	int i;
+
+// 	i = 0;
+// 	while (s1[i] && s2[i])
+// 	{
+// 		if (s1[i] != s2[i])
+// 			return (s1[i] - s2[i]);
+// 		i++;
+// 	}
+// 	return (s1[i] - s2[i]);
+// }
+
