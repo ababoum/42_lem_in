@@ -6,7 +6,7 @@
 #    By: marwa <marwa@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/08 17:28:23 by marwa             #+#    #+#              #
-#    Updated: 2023/03/08 23:12:36 by marwa            ###   ########.fr        #
+#    Updated: 2023/03/09 00:40:15 by marwa            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,11 +45,11 @@ SRCS			=		main.c
 #############################
 # 			Algorithm		#
 #############################
-SRCS			+=		add_path.c pathfinder.c create_path.c print_path.c print_all_paths.c
+SRCS			+=		add_path.c pathfinder.c create_path.c print_path.c print_all_paths.c free_path_lst.c
 #############################
 # 			Queue			#
 #############################
-SRCS			+=		initialize.c is_empty.c push.c pop.c
+SRCS			+=		initialize.c is_empty.c push.c pop.c print_queue.c
 #############################
 # 			Rooms			#
 #############################

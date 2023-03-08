@@ -84,6 +84,7 @@ void                    initialize(t_queue *q);
 size_t                  is_empty(t_queue *q);
 void                    push(t_queue *q, t_room *node);
 t_room                  *pop(t_queue *q);
+void                    print_queue(t_queue *q);
 
 
 //Algorithm
@@ -92,5 +93,7 @@ void                    add_path(t_data *data, t_path *path);
 t_list                  *pathfinder(t_data *data);
 void                    print_path(t_data *data, t_path *path);
 void                    print_all_paths(t_data *data);
+// void                    free_path_lst(t_path *path_lst);
+void                    free_path_lst(t_data *data);
 
 #endif

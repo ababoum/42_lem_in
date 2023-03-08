@@ -6,26 +6,11 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 23:15:10 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/09 00:41:14 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-static  void        reset_visited(t_data *data, char *visited, t_path *path)
-{
-    for (size_t i = 0; i < data->rooms_number; i++)
-        visited[i] = 0;
-    for (size_t i = 0; i < path->len; i++)
-    {
-        visited[path->path[i]] = 1;
-        ft_printf("%d - ", path->path[i]);
-    }
-    ft_printf("\n");
-    visited[data->start_idx] = 0;
-    visited[data->end_idx] = 0;
-}
-
 
 t_list              *pathfinder(t_data *data)
 {
@@ -42,10 +27,12 @@ t_list              *pathfinder(t_data *data)
 
     queue = malloc(sizeof(t_queue));
     visited = malloc(data->rooms_number);
+    for (size_t i = 0; i <data->rooms_number; i++)
+        visited[i] = 0;
     initialize(queue);
     current = data->rooms_tab + data->start_idx;
     push(queue, current);
-    print_room(current);
+    // print_room(current);
     while (!is_empty(queue))
     {
         current = pop(queue);
@@ -56,9 +43,6 @@ t_list              *pathfinder(t_data *data)
             // ft_printf("\033[36mReached end: %s\n\033[0m", current->name);
             path = create_path(current);
             add_path(data, path);
-            // ft_printf("\033[36m");
-            print_path(data, path);
-            // ft_printf("\033[0m");
             // reset_visited(data, visited, path);
             visited[data->start_idx] = 0;
             visited[data->end_idx] = 0;
@@ -84,5 +68,7 @@ t_list              *pathfinder(t_data *data)
     }
     ft_printf("\n\n");
     print_all_paths(data);
+    free(queue);
+    free(visited);
     return NULL;
 }
