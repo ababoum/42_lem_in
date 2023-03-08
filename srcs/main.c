@@ -2,15 +2,7 @@
 
 void print_room(t_room *room)
 {
-    ft_putstr_fd("id: ", 1);
-    ft_putnbr_fd(room->id, 1);
-    ft_putstr_fd(" name: ", 1);
-    ft_putstr_fd(room->name, 1);
-    ft_putstr_fd(" x: ", 1);
-    ft_putnbr_fd(room->x, 1);
-    ft_putstr_fd(" y: ", 1);
-    ft_putnbr_fd(room->y, 1);
-    ft_putstr_fd("\n", 1);
+    ft_printf("id: %d, name: %s, [%d, %d]\n", room->id, room->name, room->x, room->y);
 }
 
 int main(void)
@@ -28,7 +20,8 @@ int main(void)
     line = GET_NEXT_LINE(0);
     if (!ft_is_numeric(line))
     {
-        ft_putstr_fd("Error: invalid number of ants", STDERR_FILENO);
+        // ft_putstr_fd("Error: invalid number of ants", STDERR_FILENO);
+        ft_dprintf(STDERR_FILENO, "Error: invalid number of ants");
         return (EXIT_FAILURE);
     }
     else
@@ -87,7 +80,8 @@ int main(void)
                 {
                     if (data.start_idx != (size_t)-1)
                     {
-                        ft_putstr_fd("Error: multiple start rooms\n", STDERR_FILENO);
+                        // ft_putstr_fd("Error: multiple start rooms\n", STDERR_FILENO);
+                        ft_dprintf(STDERR_FILENO, "Error: multiple start rooms\n");
                         free(line);
                         ft_lstclear(&rooms, free_room);
                         return (EXIT_FAILURE);
@@ -99,7 +93,8 @@ int main(void)
                 {
                     if (data.end_idx != (size_t)-1)
                     {
-                        ft_putstr_fd("Error: multiple end rooms\n", STDERR_FILENO);
+                        // ft_putstr_fd("Error: multiple end rooms\n", STDERR_FILENO);
+                        ft_dprintf(STDERR_FILENO, "Error: multiple end rooms\n");
                         free(line);
                         ft_lstclear(&rooms, free_room);
                         return (EXIT_FAILURE);
@@ -114,7 +109,8 @@ int main(void)
                 }
                 else
                 {
-                    ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+                    // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+                    ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
                     free(line);
                     ft_lstclear(&rooms, free_room);
                     return (EXIT_FAILURE);
@@ -128,7 +124,8 @@ int main(void)
     data.rooms_tab = malloc(sizeof(t_room) * data.rooms_number);
     if (!data.rooms_tab)
     {
-        ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+        // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
         return (EXIT_FAILURE);
     }
 
@@ -146,9 +143,11 @@ int main(void)
     for (size_t i = 0; i < data.rooms_number; ++i)
     {
         if (i == data.start_idx)
-            ft_putstr_fd("start room: ", 1);
+            // ft_putstr_fd("start room: ", 1);
+            ft_printf("Start room: ");
         else if (i == data.end_idx)
-            ft_putstr_fd("end room: ", 1);
+            // ft_putstr_fd("end room: ", 1);
+            ft_printf("End room: ");
         print_room(&data.rooms_tab[i]);
     }
 
@@ -156,7 +155,8 @@ int main(void)
     data.room_links = ft_calloc(data.rooms_number + 1, sizeof(char *));
     if (!data.room_links)
     {
-        ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+        // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
         return (EXIT_FAILURE);
     }
     else
@@ -166,7 +166,8 @@ int main(void)
             data.room_links[i] = ft_calloc(data.rooms_number + 1, sizeof(char));
             if (!data.room_links[i])
             {
-                ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+                // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
+                ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
                 free_tab(data.room_links);
                 return (EXIT_FAILURE);
             }
@@ -176,7 +177,8 @@ int main(void)
     // links
     if (!line || !ft_strchr(line, '-'))
     {
-        ft_putstr_fd("Error: no links\n", STDERR_FILENO);
+        // ft_putstr_fd("Error: no links\n", STDERR_FILENO);
+        ft_dprintf(STDERR_FILENO, "Error: no links\n");
         return (EXIT_FAILURE);
     }
 
@@ -193,7 +195,8 @@ int main(void)
 
             if (room1_id == (size_t)-1 || room2_id == (size_t)-1)
             {
-                ft_putstr_fd("Error: invalid link\n", STDERR_FILENO);
+                // ft_putstr_fd("Error: invalid link\n", STDERR_FILENO);
+                ft_dprintf(STDERR_FILENO, "Error: invalid link\n");
                 return (EXIT_FAILURE);
             }
             else
