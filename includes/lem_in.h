@@ -73,6 +73,8 @@ char                    *trim_new_line(char *str);
 void                    initialize(t_queue *q);
 size_t                  is_empty(t_queue *q);
 void                    push(t_queue *q, t_room *node);
+t_room                  *pop(t_queue *q);
+
 
 //Algorithm
 t_list                  *pathfinder(t_data *data);

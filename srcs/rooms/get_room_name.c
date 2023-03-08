@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push.c                                             :+:      :+:    :+:   */
+/*   get_room_name.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 17:54:31 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 19:36:57 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/08 19:58:46 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/08 19:59:53 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void		push(t_queue *q, t_room *node)
+char	*get_room_name(t_data *data, size_t index)
 {
-	t_node		*tmp;
-
-	tmp = malloc(sizeof(node));
-	tmp->data = node;
-	tmp->next = NULL;
-	if(!is_empty(q))
-	{
-		q->rear->next = tmp;
-		q->rear = tmp;
-	}
-	else
-		q->front = q->rear = tmp;
-	q->count++;
+	char * ret = (data->rooms_tab + index)->name;
+	return (ret);
 }

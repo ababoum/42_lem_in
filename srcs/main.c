@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 18:40:41 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/08 20:15:16 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ int main(void)
             else
             {
                 data.room_links[room1_id][room2_id] = 1;
+                data.room_links[room2_id][room1_id] = 1;
             }
         }
         free(line);
@@ -225,8 +226,8 @@ int main(void)
         }
         ft_printf("\n");
     }
-    // ft_printf("\n\n");
-    // pathfinder(&data);
+    ft_printf("\n\n");
+    pathfinder(&data);
 
     return (EXIT_SUCCESS);
 }
