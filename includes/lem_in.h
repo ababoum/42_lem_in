@@ -82,7 +82,8 @@ char                    *trim_new_line(char *str);
 //Queue
 void                    initialize(t_queue *q);
 size_t                  is_empty(t_queue *q);
-void                    push(t_queue *q, t_room *node);
+void                    push(t_queue *q, t_room *node, char dup_flag);
+// void                    push(t_queue *q, t_room *node);
 t_room                  *pop(t_queue *q);
 void                    print_queue(t_queue *q);
 

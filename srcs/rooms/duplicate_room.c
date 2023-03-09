@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 23:10:17 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 23:13:59 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/09 01:04:42 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_room			*duplicate_room(t_room *room)
 
 	tmp = malloc(sizeof(t_room));
 	tmp->id = room->id;
-	tmp->name = room->name;
+	tmp->name = ft_strdup(room->name);
 	tmp->parent = room->parent;
 	tmp->x = room->x;
 	tmp->y = room->y;

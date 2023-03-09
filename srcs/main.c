@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/09 00:24:17 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/09 01:03:46 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 static void     free_all(t_data *data)
 {
     free_path_lst(data);
-    free(data->rooms_tab);
+    // free(data->rooms_tab);
     for (size_t i = 0; i < data->rooms_number; i++)
         free(data->room_links[i]);
     free(data->room_links);
