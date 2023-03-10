@@ -21,6 +21,25 @@ static void     free_all(t_data *data)
     free(data->path_lst);
 
 }
+
+void    parse_ants_number(t_data *data)
+{
+    char *line;
+
+    line = GET_NEXT_LINE(0);
+    if (!ft_is_numeric(line))
+    {
+        ft_dprintf(STDERR_FILENO, "Error: invalid number of ants");
+        free(line);
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        data->ants_number = ft_atoi(line);
+        free(line);
+    }
+}
+
 int             main(void)
 {
     char *line;
@@ -32,19 +51,8 @@ int             main(void)
     data.start_idx = -1;
     data.end_idx = -1;
     data.path_lst = NULL;
-    // number of ants
-    line = GET_NEXT_LINE(0);
-    if (!ft_is_numeric(line))
-    {
-        // ft_putstr_fd("Error: invalid number of ants", STDERR_FILENO);
-        ft_dprintf(STDERR_FILENO, "Error: invalid number of ants");
-        return (EXIT_FAILURE);
-    }
-    else
-    {
-        data.ants_number = ft_atoi(line);
-        free(line);
-    }
+    
+    parse_ants_number(&data);
 
     // rooms
     while ((line = GET_NEXT_LINE(0)) && !ft_strchr(line, '-'))
