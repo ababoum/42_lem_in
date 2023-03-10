@@ -1,0 +1,38 @@
+6
+# Medium Example
+##start
+start 0 0
+r1 0 0
+r2 0 0
+r3 0 0
+r4 0 0
+r5 0 0
+r6 0 0
+r7 0 0
+r8 0 0
+r9 0 0
+r10 0 0
+r11 0 0
+##end
+end 0 0
+start-r1
+start-r2
+start-r3
+r1-r4
+r2-r5
+r4-r6
+r6-r10
+r10-r11
+r4-r7
+r5-r8
+r6-r9
+r7-end
+r8-end
+r8-end
+
+r3-end
+r9-end
+r11-end
+
+
+

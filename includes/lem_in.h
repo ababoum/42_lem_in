@@ -35,16 +35,18 @@ typedef struct          s_path
     struct s_path       *next;
 }                       t_path;
 
-typedef struct s_data
+typedef struct          s_data
 {
     size_t              ants_number;
     size_t              rooms_number;
     t_room              *rooms_tab;
     char                **room_links;
     t_path              *path_lst;
+    size_t              path_size;
+    size_t              *ants;
     size_t              start_idx;
     size_t              end_idx;
-} t_data;
+}                       t_data;
 
 typedef struct          s_node
 {
@@ -66,7 +68,8 @@ t_room                  *new_room(const char *name, int x, int y);
 void                    print_room(t_room *room);
 char                    **split_link_line(const char *line);
 char                    **split_room_line(const char *line);
-t_room			        *duplicate_room(t_room *room);
+t_room                  *duplicate_room(t_room *room);
+void                    print_links(t_data *data);
 
 // GNL
 char                    *get_next_line(int fd);
@@ -96,5 +99,6 @@ void                    print_path(t_data *data, t_path *path);
 void                    print_all_paths(t_data *data);
 // void                    free_path_lst(t_path *path_lst);
 void                    free_path_lst(t_data *data);
+void                    solve(t_data *data);
 
 #endif

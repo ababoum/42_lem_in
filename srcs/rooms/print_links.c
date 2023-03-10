@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_path.c                                       :+:      :+:    :+:   */
+/*   print_links.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 21:42:30 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 12:54:41 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/10 13:13:33 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/10 13:14:06 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-
-void         print_path(t_data *data, t_path *path)
+void			print_links(t_data *data)
 {
-    size_t  idx;
-
-    ft_printf("Size of path: %d\n", path->len);
-    idx = path->path[0];
-    ft_printf("[%s]", data->rooms_tab[idx].name);
-    for (size_t i = 1; i < path->len; i++)
+    for (size_t i = 0; i < data->rooms_number; ++i)
     {
-        idx = path->path[i];
-        ft_printf("->[%s]", data->rooms_tab[idx].name);
+        for (size_t j = 0; j < data->rooms_number; ++j)
+        {
+            ft_printf("%d ", data->room_links[i][j]);
+        }
+        ft_printf("\n");
     }
-    ft_printf("\n");
 }
