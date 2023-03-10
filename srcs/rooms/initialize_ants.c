@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_path.c                                       :+:      :+:    :+:   */
+/*   initialize_ants.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 21:42:30 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 12:54:41 by marwa            ###   ########.fr       */
+/*   Created: 2023/03/10 10:59:49 by marwa             #+#    #+#             */
+/*   Updated: 2023/03/10 11:10:10 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 
-void         print_path(t_data *data, t_path *path)
+void			initialize_ants(t_data *data)
 {
-    size_t  idx;
-
-    ft_printf("Size of path: %d\n", path->len);
-    idx = path->path[0];
-    ft_printf("[%s]", data->rooms_tab[idx].name);
-    for (size_t i = 1; i < path->len; i++)
-    {
-        idx = path->path[i];
-        ft_printf("->[%s]", data->rooms_tab[idx].name);
-    }
-    ft_printf("\n");
+	
 }

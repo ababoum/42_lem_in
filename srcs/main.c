@@ -6,11 +6,12 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/09 01:03:46 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/10 13:42:45 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
 static void     free_all(t_data *data)
 {
     free_path_lst(data);
@@ -32,6 +33,7 @@ int             main(void)
     data.start_idx = -1;
     data.end_idx = -1;
     data.path_lst = NULL;
+    data.path_size = 0;
     // number of ants
     line = GET_NEXT_LINE(0);
     if (!ft_is_numeric(line))
@@ -225,18 +227,11 @@ int             main(void)
         line = GET_NEXT_LINE(0);
     }
 
-    // print links
-
-    for (size_t i = 0; i < data.rooms_number; ++i)
-    {
-        for (size_t j = 0; j < data.rooms_number; ++j)
-        {
-            ft_printf("%d ", data.room_links[i][j]);
-        }
-        ft_printf("\n");
-    }
     ft_printf("\n\n");
     pathfinder(&data);
+    ft_printf("\033[32mCheck Pathfinder\033[0m\n");
+    solve(&data);
+    ft_printf("\033[32mCheck Solve\033[0m\n");
     free_all(&data);
 
     return (EXIT_SUCCESS);

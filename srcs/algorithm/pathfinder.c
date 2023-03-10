@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/09 01:09:32 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/10 13:21:17 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_list              *pathfinder(t_data *data)
     size_t      idx;
     char        *visited;
 
-    ft_printf("start idx: %d\n", data->start_idx);
-    ft_printf("end idx: %d\n", data->end_idx);
+    ft_printf("Start idx: %d\n", data->start_idx);
+    ft_printf("End idx: %d\n", data->end_idx);
     ft_printf("\n\n");
 
     queue = malloc(sizeof(t_queue));
@@ -55,6 +55,9 @@ t_list              *pathfinder(t_data *data)
         current = pop(queue);
         push(to_free, current, 0);
         idx = current->id;
+        if (visited[idx])
+            continue;
+        visited[idx] = 1;
         // ft_printf("\033[32mCurrent Room: %s\n\033[0m", current->name);
         if (current->id == data->end_idx)
         {
@@ -65,25 +68,24 @@ t_list              *pathfinder(t_data *data)
             visited[data->end_idx] = 0;
             continue;
         }
-        visited[idx] = 1;
         for (size_t i = 0; i < data->rooms_number; i++)
         {
             if (data->room_links[idx][i] == 1)
             {
                 tmp = data->rooms_tab + i;
-                // ft_printf("%d Room has connection to %d\n", idx, i);
+                // ft_printf("%d connection to %d\n", idx, i);
                 if (!visited[i])
                 {
                     tmp->parent = current;
                     push(queue, tmp, 1);
-                    // ft_printf("Pushed %d\n", i);
+                    // ft_printf("\033[36mPushed %d\033[0m\n", i);
                 }
                 // else
                     // ft_printf("\033[33mAlready visited %d\033[0m\n", i);
             }
         }
     }
-    ft_printf("\n\n");
+    // ft_printf("\n\n");
     print_all_paths(data);
     free_queue(to_free);
     free(queue);
