@@ -29,6 +29,7 @@ typedef struct          s_room
 
 typedef struct          s_path
 {
+    size_t              id;
     size_t              len;
     size_t              *path;
     size_t              ant_num;

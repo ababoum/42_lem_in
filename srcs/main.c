@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 13:42:45 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/10 22:28:00 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,11 +214,11 @@ int             main(void)
         return (EXIT_FAILURE);
     }
 
-    // ft_printf("\n\n");
-    // pathfinder(&data);
-    // ft_printf("\033[32mCheck Pathfinder\033[0m\n");
-    // solve(&data);
-    // ft_printf("\033[32mCheck Solve\033[0m\n");
+    ft_printf("\n\n");
+    pathfinder(&data);
+    // ft_printf("\033[32mCheck Pathfinder\033[0m\n\n");
+    solve(&data);
+    // ft_printf("\033[32mCheck Solve\033[0m\n\n");
     free_all(&data);
 
     return (EXIT_SUCCESS);

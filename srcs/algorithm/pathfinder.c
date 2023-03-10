@@ -6,13 +6,13 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 13:21:17 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/10 19:41:03 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				free_queue(t_queue *queue)
+static void				free_queue(t_queue *queue)
 {
     t_room  *tmp;
 
@@ -24,6 +24,18 @@ void				free_queue(t_queue *queue)
     }
 }
 
+static void         create_path_ids(t_data *data)
+{
+    size_t      counter = 0;
+    t_path      *p;
+
+    p = data->path_lst;
+    while(p != NULL)
+    {
+        p->id = counter++;
+        p = p->next;
+    }
+}
 
 t_list              *pathfinder(t_data *data)
 {
@@ -48,12 +60,12 @@ t_list              *pathfinder(t_data *data)
     initialize(to_free);
     current = data->rooms_tab + data->start_idx;
     push(queue, current, 1);
-    push(to_free, current, 0);
+    push(to_free, current, 1);
     // print_room(current);
     while (!is_empty(queue))
     {
         current = pop(queue);
-        push(to_free, current, 0);
+        push(to_free, current, 1);
         idx = current->id;
         if (visited[idx])
             continue;
@@ -86,6 +98,7 @@ t_list              *pathfinder(t_data *data)
         }
     }
     // ft_printf("\n\n");
+    create_path_ids(data);
     print_all_paths(data);
     free_queue(to_free);
     free(queue);

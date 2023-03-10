@@ -6,7 +6,7 @@
 /*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 21:11:07 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/08 22:40:42 by marwa            ###   ########.fr       */
+/*   Updated: 2023/03/10 20:52:13 by marwa            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_path       *create_path(t_room *room)
     size_t      counter = 0;
 
     tmp = room;
-    while (tmp != NULL)
+    while (tmp->parent != NULL)
     {
         counter++;
         tmp = tmp->parent;
@@ -50,7 +50,7 @@ t_path       *create_path(t_room *room)
     path->len = counter;
     p = malloc(counter * sizeof(size_t));
     counter = 0;
-    while (room != NULL)
+    while (room->parent != NULL)
     {
         p[counter] = room->id;
         room = room->parent;
