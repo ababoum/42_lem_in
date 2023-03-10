@@ -19,7 +19,7 @@ MKDIR			=		mkdir
 NAME			=		lem-in
 
 CC				=		gcc
-CFLAGS			=		$(INC) -Wall -Wextra
+CFLAGS			=		$(INC) -Wall -Wextra -g
 
 SRCDIR			=		srcs
 OBJDIR			=		objs/
@@ -54,7 +54,7 @@ SRCS			+=		initialize.c is_empty.c push.c pop.c print_queue.c
 # 			Rooms			#
 #############################
 SRCS			+=		new_room.c split_room_line.c get_room_id.c split_link_line.c free_room.c print_room.c duplicate_room.c \
-						print_links.c
+						print_links.c parse_rooms.c
 #############################
 # 			Utils			#
 #############################

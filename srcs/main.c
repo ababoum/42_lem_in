@@ -14,20 +14,25 @@
 
 static void     free_all(t_data *data)
 {
-    free_path_lst(data);
-    // free(data->rooms_tab);
-    for (size_t i = 0; i < data->rooms_number; i++)
-        free(data->room_links[i]);
-    free(data->room_links);
+    // free_path_lst(data);
+    free_tab(data->room_links);
+    for (size_t i = 0; i < data->rooms_number; ++i)
+    {
+        free(data->rooms_tab[i].name);
+    }
+    free(data->rooms_tab);
     free(data->path_lst);
-
 }
 
-void    parse_ants_number(t_data *data)
+void identity(void *elem)
 {
-    char *line;
+    (void)elem;
+}
 
-    line = GET_NEXT_LINE(0);
+static void    parse_ants_number(t_data *data)
+{
+    char *line = GET_NEXT_LINE(0);
+
     if (!ft_is_numeric(line))
     {
         ft_dprintf(STDERR_FILENO, "Error: invalid number of ants");
@@ -39,6 +44,125 @@ void    parse_ants_number(t_data *data)
         data->ants_number = ft_atoi(line);
         free(line);
     }
+    if (data->ants_number <= 0)
+    {
+        ft_dprintf(STDERR_FILENO, "Error: invalid number of ants");
+        exit(EXIT_FAILURE);
+    }
+}
+
+static void init_data(t_data *data)
+{
+    data->start_idx = -1;
+    data->end_idx = -1;
+    data->path_lst = NULL;
+    data->rooms_tab = NULL;
+    data->room_links = NULL;
+    data->ants = NULL;
+    data->path_size = 0;
+}
+
+static void prepare_rooms_tab(t_data *data, t_list **rooms_ptr)
+{
+    t_list *rooms = *rooms_ptr;
+    t_list *begin = rooms;
+
+    data->rooms_number = ft_lstsize(rooms);
+    data->rooms_tab = malloc(sizeof(t_room) * data->rooms_number);
+    if (!data->rooms_tab)
+    {
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
+        ft_lstclear(&rooms, free_room);
+        exit(EXIT_FAILURE);
+    }
+
+    // fill rooms mapping tab
+    for (size_t i = 0; i < data->rooms_number; ++i)
+    {
+        data->rooms_tab[i] = *(t_room *)rooms->content;
+        free(rooms->content);
+        rooms = rooms->next;
+    }
+
+    // delete the chained list without destroying the rooms
+    ft_lstclear(&begin, identity);
+}
+
+static int prepare_links_matrix(t_data *data)
+{
+    data->room_links = ft_calloc(data->rooms_number + 1, sizeof(char *));
+    if (!data->room_links)
+    {
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
+        return (EXIT_FAILURE);
+    }
+    else
+    {
+        for (size_t i = 0; i < data->rooms_number; ++i)
+        {
+            data->room_links[i] = ft_calloc(data->rooms_number + 1, sizeof(char));
+            if (!data->room_links[i])
+            {
+                ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
+                free_tab(data->room_links);
+                return (EXIT_FAILURE);
+            }
+        }
+    }
+    return (EXIT_SUCCESS);
+}
+
+static int parse_links(t_data *data, char **ptr_line)
+{
+    char *line = *ptr_line;
+
+    while (line)
+    {
+        if (line[0] == '#') // comment line
+        {
+            free(line);
+            line = GET_NEXT_LINE(0);
+            continue;
+        }
+        else if (!ft_strchr(line, '-')) // all link lines must contain a '-' char
+        {
+            ft_dprintf(STDERR_FILENO, "Error: invalid link line\n");
+            free(line);
+            return (EXIT_FAILURE);
+        }
+
+        char **line_items = split_link_line(line);
+
+        // link
+        if (line_items)
+        {
+            size_t room1_id = get_room_id(data, line_items[0]);
+            size_t room2_id = get_room_id(data, line_items[1]);
+
+            if (room1_id == (size_t)-1 || room2_id == (size_t)-1)
+            {
+                ft_dprintf(STDERR_FILENO, "Error: invalid link\n");
+                free_tab(line_items);
+                free(line);
+                return (EXIT_FAILURE);
+            }
+            else
+            {
+                data->room_links[room1_id][room2_id] = 1;
+                data->room_links[room2_id][room1_id] = 1;
+            }
+        }
+        else
+        {
+            free(line);
+            return (EXIT_FAILURE);
+        }
+        free_tab(line_items);
+        free(line);
+        line = GET_NEXT_LINE(0);
+    }
+    *ptr_line = line;
+    return (EXIT_SUCCESS);
 }
 
 int             main(void)
@@ -46,200 +170,55 @@ int             main(void)
     char *line;
     t_data data;
     t_list *rooms = 0;
-    t_room_type room_type = NORMAL;
-    size_t line_number = 1;
 
-    data.start_idx = -1;
-    data.end_idx = -1;
-    data.path_lst = NULL;
-    data.path_size = 0;
-    
+    init_data(&data);
     parse_ants_number(&data);
 
     // rooms
-    while ((line = GET_NEXT_LINE(0)) && !ft_strchr(line, '-'))
+    rooms = parse_rooms(&data, &line);
+    if (!rooms)
     {
-        ++line_number;
-        if (line[0] == '#')
-        {
-            if (line[1] == '#')
-            {
-                if (ft_strcmp(line, "##start") == 0)
-                {
-                    // start room
-                    room_type = START;
-                }
-                else if (ft_strcmp(line, "##end") == 0)
-                {
-                    // end room
-                    room_type = END;
-                }
-                else
-                {
-                    // comment beginning with ##
-                    continue;
-                }
-            }
-            else
-            {
-                // comment
-                continue;
-            }
-        }
-        else
-        {
-            char **line_items = split_room_line(line);
-
-            if (!line_items)
-            {
-                free(line);
-                ft_lstclear(&rooms, free_room);
-                return (EXIT_FAILURE);
-            }
-            // room
-            else
-            {
-                t_room *room = new_room(line_items[0],
-                                        ft_atoi(line_items[1]),
-                                        ft_atoi(line_items[2]));
-                if (room_type == START)
-                {
-                    if (data.start_idx != (size_t)-1)
-                    {
-                        // ft_putstr_fd("Error: multiple start rooms\n", STDERR_FILENO);
-                        ft_dprintf(STDERR_FILENO, "Error: multiple start rooms\n");
-                        free(line);
-                        ft_lstclear(&rooms, free_room);
-                        return (EXIT_FAILURE);
-                    }
-                    data.start_idx = room->id;
-                    room_type = NORMAL;
-                }
-                else if (room_type == END)
-                {
-                    if (data.end_idx != (size_t)-1)
-                    {
-                        // ft_putstr_fd("Error: multiple end rooms\n", STDERR_FILENO);
-                        ft_dprintf(STDERR_FILENO, "Error: multiple end rooms\n");
-                        free(line);
-                        ft_lstclear(&rooms, free_room);
-                        return (EXIT_FAILURE);
-                    }
-                    data.end_idx = room->id;
-                    room_type = NORMAL;
-                }
-                if (room)
-                {
-                    ft_lstadd_back(&rooms, ft_lstnew(room));
-                    room_type = NORMAL;
-                }
-                else
-                {
-                    // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
-                    ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
-                    free(line);
-                    ft_lstclear(&rooms, free_room);
-                    return (EXIT_FAILURE);
-                }
-            }
-            
-        }
-        free(line);
-    }
-    data.rooms_number = ft_lstsize(rooms);
-    data.rooms_tab = malloc(sizeof(t_room) * data.rooms_number);
-    if (!data.rooms_tab)
-    {
-        // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
-        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
         return (EXIT_FAILURE);
     }
-
-    // fill rooms mapping tab
-    for (size_t i = 0; i < data.rooms_number; ++i)
-    {
-        data.rooms_tab[i] = *(t_room *)rooms->content;
-        rooms = rooms->next;
-    }
-
-    // free the list
-    ft_lstclear(&rooms, free_room);
+    
+    prepare_rooms_tab(&data, &rooms);
 
     // show the rooms mapping tab
     for (size_t i = 0; i < data.rooms_number; ++i)
     {
         if (i == data.start_idx)
-            // ft_putstr_fd("start room: ", 1);
             ft_printf("Start room: ");
         else if (i == data.end_idx)
-            // ft_putstr_fd("end room: ", 1);
             ft_printf("End room: ");
         print_room(&data.rooms_tab[i]);
     }
 
     // prepare links matrix
-    data.room_links = ft_calloc(data.rooms_number + 1, sizeof(char *));
-    if (!data.room_links)
+    if (prepare_links_matrix(&data) == EXIT_FAILURE)
     {
-        // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
-        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
-        return (EXIT_FAILURE);
-    }
-    else
-    {
-        for (size_t i = 0; i < data.rooms_number; ++i)
-        {
-            data.room_links[i] = ft_calloc(data.rooms_number + 1, sizeof(char));
-            if (!data.room_links[i])
-            {
-                // ft_putstr_fd("Error: malloc failed\n", STDERR_FILENO);
-                ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
-                free_tab(data.room_links);
-                return (EXIT_FAILURE);
-            }
-        }
+        free_all(&data);
+        return (EXIT_FAILURE);    
     }
 
     // links
     if (!line || !ft_strchr(line, '-'))
     {
-        // ft_putstr_fd("Error: no links\n", STDERR_FILENO);
         ft_dprintf(STDERR_FILENO, "Error: no links\n");
+        free_all(&data);
         return (EXIT_FAILURE);
     }
 
-    while (line && ft_strchr(line, '-'))
+    if (parse_links(&data, &line) == EXIT_FAILURE)
     {
-        ++line_number;
-        char **line_items = split_link_line(line);
-
-        // link
-        if (line_items)
-        {
-            size_t room1_id = get_room_id(&data, line_items[0]);
-            size_t room2_id = get_room_id(&data, line_items[1]);
-
-            if (room1_id == (size_t)-1 || room2_id == (size_t)-1)
-            {
-                // ft_putstr_fd("Error: invalid link\n", STDERR_FILENO);
-                ft_dprintf(STDERR_FILENO, "Error: invalid link\n");
-                return (EXIT_FAILURE);
-            }
-            else
-            {
-                data.room_links[room1_id][room2_id] = 1;
-                data.room_links[room2_id][room1_id] = 1;
-            }
-        }
-        free(line);
-        line = GET_NEXT_LINE(0);
+        free_all(&data);
+        return (EXIT_FAILURE);
     }
 
-    ft_printf("\n\n");
-    pathfinder(&data);
-    ft_printf("\033[32mCheck Pathfinder\033[0m\n");
-    solve(&data);
-    ft_printf("\033[32mCheck Solve\033[0m\n");
+    // ft_printf("\n\n");
+    // pathfinder(&data);
+    // ft_printf("\033[32mCheck Pathfinder\033[0m\n");
+    // solve(&data);
+    // ft_printf("\033[32mCheck Solve\033[0m\n");
     free_all(&data);
 
     return (EXIT_SUCCESS);

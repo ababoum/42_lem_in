@@ -70,7 +70,7 @@ char                    **split_link_line(const char *line);
 char                    **split_room_line(const char *line);
 t_room                  *duplicate_room(t_room *room);
 void                    print_links(t_data *data);
-
+t_list                  *parse_rooms(t_data *data, char **ptr_line);
 // GNL
 char                    *get_next_line(int fd);
 #define                 GET_NEXT_LINE(fd) trim_new_line(get_next_line(fd))

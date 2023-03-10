@@ -17,8 +17,7 @@ char **split_room_line(const char *line)
     char **line_items = ft_strsplit(line, ' ');
 
     if (!line_items) {
-        // ft_putstr_fd("Error: invalid room line\n", STDERR_FILENO);
-        ft_dprintf(STDERR_FILENO, "Error: invalid room line\n");
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
         return (NULL);
     }
     else if (tab_len(line_items) == 3)
@@ -26,7 +25,6 @@ char **split_room_line(const char *line)
         if (!ft_is_signed_numeric(line_items[1]) ||
             !ft_is_signed_numeric(line_items[2]))
         {
-            // ft_putstr_fd("Error: invalid room coordinates\n", STDERR_FILENO);
             ft_dprintf(STDERR_FILENO, "Error: invalid room coordinates\n");
             free_tab(line_items);
             return (NULL);
@@ -34,7 +32,6 @@ char **split_room_line(const char *line)
     }
     else
     {
-        // ft_putstr_fd("Error: invalid room line\n", STDERR_FILENO);
         ft_dprintf(STDERR_FILENO, "Error: invalid room line\n");
         free_tab(line_items);
         return (NULL);

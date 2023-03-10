@@ -15,13 +15,19 @@
 char **split_link_line(const char *line)
 {
     char **line_items = ft_strsplit(line, '-');
-    if (line_items && tab_len(line_items) == 2)
+    if (!line_items)
+    {
+        ft_dprintf(STDERR_FILENO, "Error: malloc failed\n");
+        return (NULL);
+    }
+    else if (tab_len(line_items) == 2)
     {
         return (line_items);
     }
     else
     {
         ft_dprintf(STDERR_FILENO, "Error: invalid link line\n");
+        free_tab(line_items);
         return (NULL);
     }
 }

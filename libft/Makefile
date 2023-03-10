@@ -12,7 +12,7 @@
 
 NAME			=	libft.a
 CC				= 	gcc
-CFlAGS			=	-Wall -Werror -Wextra
+CFlAGS			=	-Wall -Werror -Wextra -g
 HEADERS			=	includes
 
 SRC				=	./src
