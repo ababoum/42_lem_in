@@ -139,9 +139,9 @@ void					solve(t_data *data)
 	for (size_t i = 0; i < n_paths; i++)
 	{
 		paths[i] = malloc(4 * sizeof(size_t));
-		paths[i][0] = p->len;
-		paths[i][1] = p->ant_num;
-		paths[i][2] = 0;
+		paths[i][LEN] = p->len;
+		paths[i][ANT_NUM] = p->ant_num;
+		paths[i][OFFSET] = 0;
 		p = p->next;
 	}
 	// for (size_t i = 0; i < n_paths; i++)
@@ -153,14 +153,15 @@ void					solve(t_data *data)
 		current = 0;
 		for (size_t j = 1; j < n_paths; j++)
 		{
-			if (paths[j][0] + paths[j][1] < paths[current][0] + paths[current][1])
+			if (paths[j][LEN] + paths[j][ANT_NUM] < paths[current][LEN] + paths[current][ANT_NUM])
 			{
 				current = j;
 				break;
 			}
 		}
 		data->ants[i] = current;
-		paths[current][1]++;
+		paths[current][ANT_NUM]++;
+		// TODO: check the index of the path in path_lst
 		data->path_lst->ant_num++;
 		ft_printf("\033[36mAnt %d going to path %d\033[0m\n", i, data->ants[i]);
 	}
