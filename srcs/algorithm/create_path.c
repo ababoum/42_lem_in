@@ -34,7 +34,7 @@ size_t      *rev_path(size_t *str, size_t len)
 
 t_path       *create_path(t_room *room)
 {
-    size_t       *p;
+    size_t      *p;
     t_room      *tmp;
     t_path      *path;
     size_t      counter = 0;
@@ -46,9 +46,13 @@ t_path       *create_path(t_room *room)
         tmp = tmp->parent;
     }
     path = malloc(sizeof(t_path));
+    if (path == NULL)
+        return (NULL);
     path->ant_num = 0;
     path->len = counter;
     p = malloc(counter * sizeof(size_t));
+    if (p == NULL)
+        return (NULL);
     counter = 0;
     while (room->parent != NULL)
     {

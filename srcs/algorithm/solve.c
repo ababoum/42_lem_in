@@ -47,7 +47,7 @@ static void			print_solution(t_data *data, size_t **solution, size_t max_len)
 		}
 		ft_printf("\n");
 	}
-	ft_printf("\033[32Number of lines: %d\033[0m\n", max_len - 1);
+	ft_printf("\033[32mNumber of lines: %d\033[0m\n", max_len - 1);
 }
 
 static size_t		get_max_len(size_t *ants, size_t n_ants, size_t **paths)

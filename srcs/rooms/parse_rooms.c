@@ -1,5 +1,20 @@
 #include "lem_in.h"
 
+static bool available_name_coordinates(t_list *rooms, char *name, int x, int y)
+{
+    while (rooms)
+    {
+        t_room *room = rooms->content;
+        if (ft_strcmp(room->name, name) == 0)
+            return (false);
+        if (room->x == x && room->y == y)
+            return (false);
+        rooms = rooms->next;
+    }
+    return (true);
+}
+
+
 t_list *parse_rooms(t_data *data, char **ptr_line)
 {
     t_list *rooms = 0;
@@ -35,6 +50,17 @@ t_list *parse_rooms(t_data *data, char **ptr_line)
             // room
             else
             {
+                // check if the name or the coordinates are already used
+                if (!available_name_coordinates(rooms, line_items[0],
+                                                ft_atoi(line_items[1]),
+                                                ft_atoi(line_items[2])))
+                {
+                    ft_dprintf(STDERR_FILENO, "Error: room name or coordinates already used\n");
+                    free(line);
+                    free_tab(line_items);
+                    ft_lstclear(&rooms, free_room);
+                    return (NULL);
+                }
                 t_room *room = new_room(line_items[0],
                                         ft_atoi(line_items[1]),
                                         ft_atoi(line_items[2]));

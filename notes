@@ -1,1 +1,2 @@
-Careful with duplicate room names / duplicate coordinates
+Protect mallocs
+Solve memory leaks
