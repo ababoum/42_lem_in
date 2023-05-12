@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdaoud <mdaoud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:22:10 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 22:21:00 by marwa            ###   ########.fr       */
+/*   Updated: 2023/05/12 17:39:37 by mdaoud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ static void			create_solution(t_data *data, size_t **paths)
 		}
 		// ft_printf("it for id %d is: %d\n", i, it);
 
-		it = 0;
-		while (it < paths[path_id][LEN] + offset)
+		// it = 0;
+		// size_t dec = 0;
+		// while (dec < paths[path_id][LEN])
+		for (size_t j = 0; j < paths[path_id][LEN]; j++)
 		{
-			solution[i][it + offset] = p->path[it];
+			solution[i][it] = p->path[j];
 			it++;
 		}
 		// ft_printf("it for id %d is: %d\n", i, it);
