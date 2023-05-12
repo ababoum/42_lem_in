@@ -6,7 +6,7 @@
 /*   By: mdaoud <mdaoud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 13:22:10 by marwa             #+#    #+#             */
-/*   Updated: 2023/05/12 17:39:37 by mdaoud           ###   ########.fr       */
+/*   Updated: 2023/05/12 18:13:30 by mdaoud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # define ANT_NUM	1
 # define OFFSET		2
 # define SIZE		3
+
+static void				free_paths(size_t **paths, size_t n_paths)
+{
+	for (size_t i = 0; i < n_paths; i++)
+		free(paths[i]);
+	free(paths);
+}
 
 t_path					*get_path_by_id(t_data *data, size_t id)
 {
@@ -127,6 +134,9 @@ static void			create_solution(t_data *data, size_t **paths)
 		ft_printf("\n");
 	}
 	print_solution(data, solution, max_len);
+	for (size_t i = 0; i < n_ants; i++)
+		free(solution[i]);
+	free(solution);
 }
 
 void					solve(t_data *data)
@@ -170,4 +180,5 @@ void					solve(t_data *data)
 	// ft_printf("\n\n\033[36mOFFSET:\033[m\n");
 	ft_printf("\n");
 	create_solution(data, paths);
+    free_paths(paths, n_paths);
 }

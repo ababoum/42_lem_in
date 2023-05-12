@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathfinder.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdaoud <mdaoud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:50:50 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 19:41:03 by marwa            ###   ########.fr       */
+/*   Updated: 2023/05/12 18:22:53 by mdaoud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_list              *pathfinder(t_data *data)
     while (!is_empty(queue))
     {
         current = pop(queue);
-        push(to_free, current, 1);
+        push(to_free, current, 0);
         idx = current->id;
         if (visited[idx])
             continue;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marwa <marwa@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mdaoud <mdaoud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 18:12:11 by marwa             #+#    #+#             */
-/*   Updated: 2023/03/10 22:28:00 by marwa            ###   ########.fr       */
+/*   Updated: 2023/05/12 18:08:35 by mdaoud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static void     free_all(t_data *data)
 {
-    // free_path_lst(data);
+    free_path_lst(data);
     free_tab(data->room_links);
     for (size_t i = 0; i < data->rooms_number; ++i)
     {
         free(data->rooms_tab[i].name);
     }
+    free(data->ants);
     free(data->rooms_tab);
     free(data->path_lst);
 }
@@ -180,7 +181,7 @@ int             main(void)
     {
         return (EXIT_FAILURE);
     }
-    
+
     prepare_rooms_tab(&data, &rooms);
 
     // show the rooms mapping tab
@@ -197,7 +198,7 @@ int             main(void)
     if (prepare_links_matrix(&data) == EXIT_FAILURE)
     {
         free_all(&data);
-        return (EXIT_FAILURE);    
+        return (EXIT_FAILURE);
     }
 
     // links
